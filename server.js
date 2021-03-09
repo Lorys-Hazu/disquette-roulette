@@ -114,4 +114,5 @@ function broadcastToRoomButMe(msg, currSocket) {
 
 function closeChannel(socket) {
   broadcastToRoomButMe(prepareMsg({type: TYPES.CLOSE_MESSAGE_FROM_OTHER}), socket);
+  console.log("brodacasting message for closing")
 }

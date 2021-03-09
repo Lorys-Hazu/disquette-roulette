@@ -266,6 +266,7 @@ videoBtn.addEventListener('click', event => {
   });
 
 function closeMyChannel() {
+    console.log("closing my channel")
     stopStream(myVideoArea);
     stopStream(otherVideoArea);
   }
