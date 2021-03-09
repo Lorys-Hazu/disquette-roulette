@@ -262,6 +262,7 @@ videoBtn.addEventListener('click', event => {
         rtcPeerConn.removeTrack(sender);
     })
     senders.length = 0
+    console.log(prepareMsg({type: TYPES.CLOSE_MESSAGE_FROM_USER}));
     socket.send(prepareMsg({type: TYPES.CLOSE_MESSAGE_FROM_USER}));
   });
 
