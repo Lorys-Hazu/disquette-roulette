@@ -39,6 +39,7 @@ let isConnected = false;
 const TYPES = {
     NEW_USER: 'newUser',
     SIGNAL_MESSAGE_FROM_CLIENT: 'signal_message_from_client',
+    CLOSE_MESSAGE_FROM_OTHER: 'jmetire',
     DISCONNECTING: 'disconnecting',
     JOINED_ROOM: 'joined_room',
     SIGNAL_MESSAGE_TO_CLIENT: 'signal_message_to_client'
@@ -109,6 +110,8 @@ function handleMessage({type, content}) {
         case TYPES.SIGNAL_MESSAGE_TO_CLIENT: 
             onSignalingMessage(content);
             break;
+        case TYPES.CLOSE_MESSAGE_FROM_OTHER:
+            closeMyChannel();
         default:
             break;
       };
@@ -254,13 +257,18 @@ videoBtn.addEventListener('click', event => {
 
   leaveBtn.addEventListener('click', event => {
     stopStream(myVideoArea);
+    stopStream(otherVideoArea);
     senders.forEach(sender => {
         rtcPeerConn.removeTrack(sender);
     })
     senders.length = 0
+    socket.send(prepareMsg({type: TYPES.CLOSE_MESSAGE_FROM_USER}));
   });
 
-
+function closeMyChannel() {
+    stopStream(myVideoArea);
+    stopStream(otherVideoArea);
+  }
 
 function onTrack(e) {
     displayStream(e.streams[0], otherVideoArea);

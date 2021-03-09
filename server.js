@@ -38,6 +38,7 @@ wss.on('connection', function(socket) {
 const TYPES = {
   NEW_USER: 'newUser',
   SIGNAL_MESSAGE_FROM_CLIENT: 'signal_message_from_client',
+  CLOSE_MESSAGE_FROM_USER: 'cassetoi',
   DISCONNECTING: 'disconnecting',
   JOINED_ROOM: 'joined_room',
   SIGNAL_MESSAGE_TO_CLIENT: 'signal_message_to_client'
@@ -57,6 +58,9 @@ function handleMessage({type, content}, socket) {
       break;
     case TYPES.DISCONNECTING:
       onDisconnecting(socket);
+      break;
+    case CLOSE_MESSAGE_FROM_USER:
+      closeChannel(socket);
       break;
     default:
       break;
@@ -106,4 +110,8 @@ function broadcastToRoomButMe(msg, currSocket) {
   sockets.filter(socket => socket.room === currSocket.room && socket !== currSocket).forEach((socket, i) => {
     socket.send(msg)
   });
+}
+
+function closeChannel(socket) {
+  broadcastToRoomButMe(prepareMsg({type: TYPES.CLOSE_MESSAGE_FROM_OTHER}), socket);
 }
