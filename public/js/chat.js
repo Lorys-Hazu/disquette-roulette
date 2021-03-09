@@ -165,9 +165,14 @@ function onSignalingMessageICECandidate(message) {
         candidatesQueue.push(candidate);
     } else {
         console.log(candidate);
-        rtcPeerConn.addIceCandidate(new RTCIceCandidate(candidate)).catch(err => console.error('error!!', err));
+        
+        addIceCandidate(candidate);
     }
     
+}
+
+function addIceCandidate(candidate){
+        rtcPeerConn.addIceCandidate(new RTCIceCandidate(candidate));
 }
 
 sendMessage.addEventListener('click', (e) => {
@@ -309,6 +314,6 @@ function sendLocalDesc(descriptor) {
 
 function sendQueuedCandidates() {
     candidatesQueue.forEach(candidate => {
-        rtcPeerConn.addIceCandidate(new RTCIceCandidate(candidate)).catch(err => console.error('error!!', err));
+        addIceCandidate(candidate);
     });
 }
