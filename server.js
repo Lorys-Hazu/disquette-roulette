@@ -26,6 +26,7 @@ wss.on('connection', function(socket) {
 
   socket.on('message', function(msg) {
     handleMessage(parseMsg(msg), this);
+    console.log('chaussette bien reçue chef')
   });
 
   // When a socket closes, or disconnects, remove it from the array.
