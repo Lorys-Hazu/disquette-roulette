@@ -243,7 +243,6 @@ videoBtn.addEventListener('click', event => {
 
   re.addEventListener('click', event => {
     startStream()
-         .then(stream => stopStream(stream, myVideoArea))
          .then(stream => {
              stream.getTracks().forEach(track => {
                   //send tracks to peer
@@ -254,6 +253,7 @@ videoBtn.addEventListener('click', event => {
   });
 
   leaveBtn.addEventListener('click', event => {
+    stopStream(myVideoArea);
     senders.forEach(sender => {
         rtcPeerConn.removeTrack(sender);
     })

@@ -31,9 +31,8 @@ export function displayStream(mediaStream, videoArea) {
     return mediaStream;
 }
 
-export function stopStream(mediaStream, videoArea) {
+export function stopStream(videoArea) {
     videoArea.srcObject = null;
-    return mediaStream;
 }
 
 function logError(error, msg = 'An error occured') {
