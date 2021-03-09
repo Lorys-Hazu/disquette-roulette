@@ -20,6 +20,7 @@ const sendMessage = document.querySelector('#sendMessage');
 const chatArea = document.querySelector('#chatArea');
 const videoBtn = document.querySelector('#video-btn');
 const leaveBtn = document.querySelector('#leave-btn');
+const re = document.querySelector('#re-btn');
 let senders = []
 
 let room;
@@ -239,6 +240,16 @@ videoBtn.addEventListener('click', event => {
          videoBtn.classList.add('disabledButton');
   });
 
+  re.addEventListener('click', event => {
+    startStream()
+         .then(stream => {
+             stream.getTracks().forEach(track => {
+                  //send tracks to peer
+                  senders.push(rtcPeerConn.addTrack(track, stream));
+             });
+         })
+         .catch((e) => logError(e, `Could not start stream`));
+  });
 
   leaveBtn.addEventListener('click', event => {
     senders.forEach(sender => {
