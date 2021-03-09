@@ -95,6 +95,7 @@ function onConnect(userFrom, userTo) {
 }
 
 function prepareMsg(msg) {
+    console.log(msg);
     return JSON.stringify(msg);
 }
 
