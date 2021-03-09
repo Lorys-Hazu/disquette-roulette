@@ -3,6 +3,7 @@ import {
     myVideoArea, 
     otherVideoArea, 
     startStream, 
+    stopStream,
     displayStream 
 } from './video.js';
 import { 
