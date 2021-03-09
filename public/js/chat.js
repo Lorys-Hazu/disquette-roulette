@@ -244,6 +244,7 @@ videoBtn.addEventListener('click', event => {
     senders.forEach(sender => {
         rtcPeerConn.removeTrack(sender);
     })
+    senders.length = 0
   });
 
 
