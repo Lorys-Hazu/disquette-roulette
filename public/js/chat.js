@@ -18,6 +18,8 @@ const recipientName = document.getElementById('recipient');
 const message = document.querySelector('#message');
 const sendMessage = document.querySelector('#sendMessage');
 const chatArea = document.querySelector('#chatArea');
+const videoBtn = document.querySelector('#video-btn');
+const leaveBtn = document.querySelector('#leave-btn');
 
 let room;
 let socket;
@@ -205,16 +207,49 @@ function startSignaling() {
     rtcPeerConn.ontrack = onTrack
 
     // get a local stream, show it in our video tag and add it to be sent
-    startStream()
-        .then(stream => displayStream(stream, myVideoArea))
-        .then(stream => {
-            stream.getTracks().forEach(track => {
-                // send tracks to peer
-                rtcPeerConn.addTrack(track, stream);
-            });
-        })
-        .catch((e) => logError(e, `Could not start stream`));
+    // startStream()
+    //     .then(stream => displayStream(stream, myVideoArea))
+    //     .then(stream => {
+    //         stream.getTracks().forEach(track => {
+    //             // send tracks to peer
+    //             rtcPeerConn.addTrack(track, stream);
+    //         });
+    //     })
+    //     .catch((e) => logError(e, `Could not start stream`));
 }
+
+videoBtn.addEventListener('click', event => {
+    startStream()
+         .then(stream => displayStream(stream, myVideoArea))
+         .then(stream => {
+             stream.getTracks().forEach(track => {
+                  //send tracks to peer
+                 rtcPeerConn.addTrack(track, stream);
+                 const testSender = rtcPeerConn.getSenders();
+                 return testSender
+             });
+         })
+         .catch((e) => logError(e, `Could not start stream`));
+         videoBtn.innerHTML = "leave video";
+         videoBtn.classList.add('disabledButton');
+  });
+
+
+  leaveBtn.addEventListener('click', event => {
+    startStream()
+         .then(stream => {
+             stream.getTracks().forEach(track => {
+                  //send tracks to peer
+                 console.log(track);
+                 rtcPeerConn.removeTrack(testSender);
+             });
+         })
+         .catch((e) => logError(e, `Could not start stream`));
+         videoBtn.innerHTML = "join video";
+         videoBtn.classList.add('disabledButton');
+  });
+
+
 
 function onTrack(e) {
     displayStream(e.streams[0], otherVideoArea);
