@@ -20,6 +20,7 @@ const sendMessage = document.querySelector('#sendMessage');
 const chatArea = document.querySelector('#chatArea');
 const videoBtn = document.querySelector('#video-btn');
 const leaveBtn = document.querySelector('#leave-btn');
+let senders = []
 
 let room;
 let socket;
@@ -230,9 +231,7 @@ videoBtn.addEventListener('click', event => {
          .then(stream => {
              stream.getTracks().forEach(track => {
                   //send tracks to peer
-                 rtcPeerConn.addTrack(track, stream);
-                 const testSender = rtcPeerConn.getSenders();
-                 return testSender
+                  senders.push(rtcPeerConn.addTrack(track, stream));
              });
          })
          .catch((e) => logError(e, `Could not start stream`));
@@ -242,17 +241,9 @@ videoBtn.addEventListener('click', event => {
 
 
   leaveBtn.addEventListener('click', event => {
-    startStream()
-         .then(stream => {
-             stream.getTracks().forEach(track => {
-                  //send tracks to peer
-                 console.log(track);
-                 rtcPeerConn.removeTrack(testSender);
-             });
-         })
-         .catch((e) => logError(e, `Could not start stream`));
-         videoBtn.innerHTML = "join video";
-         videoBtn.classList.add('disabledButton');
+    senders.forEach(sender => {
+        rtcPeerConn.removeTrack(sender);
+    })
   });
 
 
