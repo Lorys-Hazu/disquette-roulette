@@ -164,6 +164,7 @@ function onSignalingMessageICECandidate(message) {
     if(!(rtcPeerConn?.remoteDescription?.type)){
         candidatesQueue.push(candidate);
     } else {
+        console.log(candidate);
         rtcPeerConn.addIceCandidate(new RTCIceCandidate(candidate)).catch(err => console.error('error!!', err));
     }
     
