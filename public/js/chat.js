@@ -242,6 +242,7 @@ videoBtn.addEventListener('click', event => {
 
   re.addEventListener('click', event => {
     startStream()
+         .then(stream => stopStream(stream, myVideoArea))
          .then(stream => {
              stream.getTracks().forEach(track => {
                   //send tracks to peer

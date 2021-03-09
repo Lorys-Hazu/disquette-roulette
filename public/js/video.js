@@ -31,6 +31,11 @@ export function displayStream(mediaStream, videoArea) {
     return mediaStream;
 }
 
+export function stopStream(mediaStream, videoArea) {
+    videoArea.srcObject = null;
+    return mediaStream;
+}
+
 function logError(error, msg = 'An error occured') {
     console.error(`${msg}`, error);
 }
