@@ -39,6 +39,7 @@ let isConnected = false;
 const TYPES = {
     NEW_USER: 'newUser',
     SIGNAL_MESSAGE_FROM_CLIENT: 'signal_message_from_client',
+    CLOSE_MESSAGE_FROM_USER: 'cassetoi',
     CLOSE_MESSAGE_FROM_OTHER: 'jmetire',
     DISCONNECTING: 'disconnecting',
     JOINED_ROOM: 'joined_room',
