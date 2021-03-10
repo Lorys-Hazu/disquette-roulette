@@ -1,3 +1,35 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+#chat-section{
+    background-color: #7c1adb;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    width: 100%;
+    height: 100vh;
+}
+
+input{
+    height: 50px;
+    width: 345px;
+    border-radius: 11px;
+    border-color: white;
+    background-color: #F9494B;
+    display: flex;
+    place-content: center;
+}
+
+button{
+    display: flex;
+    place-content: center;
+    height: 20px;
+    width: 300px;
+    border-radius: 8px;
+    border: 0px;
+    background-color: #F9494B;
+    color: white;
+}
 .display-none {
     display: none
 }
@@ -10,9 +42,20 @@
 .disabledButton:hover{
     cursor: not-allowed;
 }
+.message {
+    padding: 20px;
+    background-color: white;
+    border-radius: 11px;
+    color: black;
+    margin-top:10px
+}
 .myMessage{
     float: right;
+    margin-right: 10px;
+    margin-left: 95%;
 }
 .otherMessage{
     float:left;
+    margin-left: 10px;
+    margin-right: 95%;
 }

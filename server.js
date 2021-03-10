@@ -42,6 +42,8 @@ const TYPES = {
   SIGNAL_MESSAGE_FROM_CLIENT: 'signal_message_from_client',
   CLOSE_MESSAGE_FROM_CLIENT: 'close_message_from_client',
   CLOSE_MESSAGE_TO_CLIENT: 'close_message_to_client',
+  FILE_MESSAGE_FROM_CLIENT: 'file_message_from_client',
+  FILE_MESSAGE_TO_CLIENT: 'file_message_to_client',
   DISCONNECTING: 'disconnecting',
   JOINED_ROOM: 'joined_room',
   SIGNAL_MESSAGE_TO_CLIENT: 'signal_message_to_client'
@@ -65,6 +67,8 @@ function handleMessage({type, content}, socket) {
     case TYPES.CLOSE_MESSAGE_FROM_CLIENT:
       closeChannel(socket);
       break;
+    case TYPES.FILE_MESSAGE_FROM_CLIENT:
+      sendFileToOther(content, socket);
     default:
       break;
   };
@@ -114,4 +118,9 @@ function broadcastToRoomButMe(msg, currSocket) {
 function closeChannel(socket) {
   console.log("brodacasting message for closing")
   broadcastToRoomButMe(prepareMsg({type: TYPES.CLOSE_MESSAGE_TO_CLIENT}), socket);
+}
+
+function sendFileToOther(contenu, socket) {
+  console.log("sending profile pic to other (not displaying it)")
+  broadcastToRoomButMe(prepareMsg({type: TYPES.FILE_MESSAGE_TO_CLIENT, content: contenu}), socket)
 }

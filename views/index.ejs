@@ -9,8 +9,8 @@
     <script src="js/app.js" type="module"></script>
 </head>
 <body>
-    <video id="myVideoArea" autoplay muted></video>
-    <video id="otherVideoArea" autoplay></video>
+    <video id="myVideoArea" class="display-none" autoplay muted></video>
+    <video id="otherVideoArea" class="display-none" autoplay></video>
     <section id="connect-section">
 
         <form>
@@ -20,7 +20,7 @@
             <label for="age">Your Age</label><br/>
             <input id="age" type="text"/><br/><br/>
 
-            <p>Sexe : </p>
+            <p>Je suis : </p>
             <input type="radio" id="male" name="sex" value="homme">
             <label for="male">Homme</label>
             <input type="radio" id="female" name="sex" value="femme">
@@ -28,7 +28,7 @@
             <input type="radio" id="nb" name="sex" value="nb">
             <label for="nb">Non Binaire</label>
 
-            <p>Je préfère :  </p>
+            <p>Je souhaite rencontrer :  </p>
             <input type="radio" id="homme" name="preference" value="homme">
             <label for="homme">Homme</label>
             <input type="radio" id="femme" name="preference" value="femme">
@@ -43,6 +43,8 @@
         </form>
     </section>
     <section id="chat-section" class="display-none">
+        <button id="display">OUI (provisoire)</button>
+        <button id="display-photo">Display Photo</button>
         <button id="video-btn">Join Video</button>
         <button id="leave-btn">Leave Video</button>
         <div id="chatArea">Message Output:<br/></div>

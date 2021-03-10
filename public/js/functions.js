@@ -1,3 +1,4 @@
+let messages = [];
 
 export function logError(error) {
    console.error(`the following error occured during signaling: ${error}`);
@@ -13,7 +14,9 @@ export function displayElement(id) {
 
 export function displayMessage(area, message, who) {
     const div = document.createElement('div');
+    messages.push(message);
     div.innerText = message;
+    div.classList.add('message')
     if (who === "me"){
         div.classList.add('myMessage')
     }
@@ -21,4 +24,17 @@ export function displayMessage(area, message, who) {
         div.classList.add('otherMessage')
     }
     area.appendChild(div);
+}
+
+export function canDisplayTest(){
+    if (messages.length > 5){
+        display()
+    }
+    else {
+        console.log('il faut plus de messages')
+    }
+}
+
+export function display(){
+    console.log('toto');
 }

@@ -10,7 +10,9 @@ import {
     displayElement, 
     displayMessage, 
     hideElement, 
-    logError
+    logError,
+    canDisplayTest,
+    display
 } from './functions.js';
 
 const connectBtn = document.querySelector('#connect');
@@ -24,8 +26,11 @@ const sendMessage = document.querySelector('#sendMessage');
 const chatArea = document.querySelector('#chatArea');
 const videoBtn = document.querySelector('#video-btn');
 const leaveBtn = document.querySelector('#leave-btn');
+const displayPhotoBtn = document.querySelector('#display-photo');
+const provisoire = document.querySelector('#display');
 
 let senders = []
+let messages = []
 
 let room;
 let socket;
@@ -46,7 +51,9 @@ const TYPES = {
     CLOSE_MESSAGE_TO_CLIENT: 'close_message_to_client',
     DISCONNECTING: 'disconnecting',
     JOINED_ROOM: 'joined_room',
-    SIGNAL_MESSAGE_TO_CLIENT: 'signal_message_to_client'
+    SIGNAL_MESSAGE_TO_CLIENT: 'signal_message_to_client',
+    FILE_MESSAGE_FROM_CLIENT: 'file_message_from_client',
+    FILE_MESSAGE_TO_CLIENT: 'file_message_to_client'
   }
 
 const SIGNAL_TYPES = {
@@ -75,7 +82,6 @@ connectBtn.addEventListener('click', (e) => {
     if (!name.value) {
         return;
     }
-    console.log('name:' + name + 'sex:' + sex + 'pref' + preference);
     connect(name.value, sex, preference);
     hideElement('connect-section');
     displayElement('chat-section');
@@ -133,6 +139,10 @@ function handleMessage({type, content}) {
             break;
         case TYPES.CLOSE_MESSAGE_TO_CLIENT:
             closeMyChannel();
+            break;
+        case TYPES.FILE_MESSAGE_TO_CLIENT:
+            console.log(content);
+            break;
         default:
             break;
       };
@@ -251,6 +261,21 @@ function startSignaling() {
     //     .catch((e) => logError(e, `Could not start stream`));
 }
 
+displayPhotoBtn.addEventListener('click', event => {
+    canDisplayTest()
+})
+
+let truc = "truc"
+provisoire.addEventListener('click', event => {
+    prepareFileSending(truc);
+})
+
+function prepareFileSending(truc) {
+    console.log('preparing file')
+    console.log(truc);
+    socket.send(prepareMsg({type: TYPES.FILE_MESSAGE_FROM_CLIENT, content: truc}));
+}
+
 videoBtn.addEventListener('click', event => {
     startStream()
          .then(stream => displayStream(stream, myVideoArea))
@@ -261,20 +286,11 @@ videoBtn.addEventListener('click', event => {
              });
          })
          .catch((e) => logError(e, `Could not start stream`));
+         myVideoArea.classList.remove('display-none')
+         otherVideoArea.classList.remove('display-none')
         //  videoBtn.classList.add('disabledButton');
         //  leaveBtn.classList.remove('disabledButton');
   });
-
-//   re.addEventListener('click', event => {
-//     startStream()
-//          .then(stream => {
-//              stream.getTracks().forEach(track => {
-//                   //send tracks to peer
-//                   senders.push(rtcPeerConn.addTrack(track, stream));
-//              });
-//          })
-//          .catch((e) => logError(e, `Could not start stream`));
-//   });
 
   leaveBtn.addEventListener('click', event => {
     stopStream(myVideoArea);
@@ -285,8 +301,8 @@ videoBtn.addEventListener('click', event => {
     senders.length = 0
     console.log(prepareMsg({type: TYPES.CLOSE_MESSAGE_FROM_CLIENT}));
     socket.send(prepareMsg({type: TYPES.CLOSE_MESSAGE_FROM_CLIENT}));
-    // leaveBtn.classList.add('disabledButton');
-    // videoBtn.classList.remove('disabledButton');
+    myVideoArea.classList.add('display-none')
+    otherVideoArea.classList.add('display-none')
   });
 
 function closeMyChannel() {
