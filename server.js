@@ -70,14 +70,11 @@ function handleMessage({type, content}, socket) {
   };
 }
 
-function onNewUser({userFrom, userTo}, socket) {
-  console.error('WESH LA FAMILLE');
-    chatServer.connectUsers(userFrom, userTo, socket);
-    console.error('ENVIE DE CANER SA MERE');
+function onNewUser({sex, preference}, socket) {
+    chatServer.connectUsers(sex, preference, socket);
     const signalingUiid = chatServer.generateSignalingIdForRoom(socket.room);
     
     const roomMsg = prepareMsg({type: TYPES.JOINED_ROOM, content: {room: socket.room}});
-    console.log('room msg', roomMsg);
     broadcastToMe(roomMsg, socket);
     
     const signalingMsg = prepareMsg({type: TYPES.SIGNAL_MESSAGE_TO_CLIENT, content: {signalType: SIGNAL_TYPES.USER_HERE, message: signalingUiid}});

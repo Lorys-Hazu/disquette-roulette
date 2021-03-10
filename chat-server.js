@@ -3,32 +3,40 @@ const establishedConnections = {};
 const rooms = {};
 const uuids = {};
 
+let availableRooms = [];
+let busyRooms = [];
+let compteur = 1;
+
 let signalingId = 1;
 
-function connectUsers(Iam, Iwant, socket) {
-    let room;
-    if (!alreadyAsked(Iam, Iwant)) {
-        console.log('ALREADY ASKED 1')
-        if (!alreadyAsked(Iwant, Iam)) {
-        console.log('ALREADY ASKED 2')
-
-            startConnectionBetweenUsers(Iam, Iwant);
-            room = `${Iam}${Iwant}`.replace(' ', '');
-        } else {
-        console.log('ALREADY ASKED 3')
-
-            finishConnectionBetweenUsers(Iwant, Iam);
-            room = `${Iwant}${Iam}`.replace(' ', '');
-        }
-
-        console.log('rooms[room]', rooms[room])
-        if (!rooms[room]) {
-            rooms[room] = [];
-        }
-
-        rooms[room].push(Iam);
-        joinRoom(room, socket);
+function connectUsers(sex, preference, socket) {
+    let room = isAvailableRoom(sex, preference);
+    if (!!room) {
+        makeRoomBusy(room);
+    } else {
+        room = createRoom(sex, preference);
     }
+
+    joinRoom(room, socket);
+}
+
+function createRoom(sex, preference) {
+    const room = preference + '-' + sex + '-' + compteur;
+    availableRooms.push(room);
+    compteur++;
+    return room;
+}
+
+function makeRoomBusy(room) {
+    availableRooms = availableRooms.filter( r =>  r !== room);
+    busyRooms.push(room);
+}
+
+function isAvailableRoom(sex, preference) {
+    return availableRooms.find(r => {
+        const [prefPart, sexPart] = r.split('-');
+        return sexPart === preference && prefPart === sex;
+    });
 }
 
 function generateSignalingIdForRoom(room) {
@@ -43,23 +51,6 @@ function joinRoom(room, socket) {
     console.log(`Joingin room ${room}`);
     socket.room = room;
 }
-
-function startConnectionBetweenUsers(Iam, Iwant) {
-    pendingConnections[Iam] = Iwant;
-    console.log(`starting connection between users ${Iam} and ${Iwant}`);
-}
-
-function finishConnectionBetweenUsers(user2, user1) {
-    console.log(`finishing connection between users ${user1} and ${user2}`);
-    establishedConnections[user1] = user2;
-    delete pendingConnections[user1];
-    delete pendingConnections[user2];
-}
-
-function alreadyAsked(Iwant, Iam) {
-    return pendingConnections[Iwant] === Iam;
-}
-
 
 function areUsersConnected(user1, user2) {
     return establishedConnections[user1] === user2 || establishedConnections[user2] === user1;

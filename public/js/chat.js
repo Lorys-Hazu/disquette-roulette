@@ -15,7 +15,8 @@ import {
 
 const connectBtn = document.querySelector('#connect');
 const name = document.getElementById('name');
-const recipientName = document.getElementById('recipient');
+const sex = document.getElementById('sex');
+const preference = document.getElementById('preference');
 const message = document.querySelector('#message');
 const sendMessage = document.querySelector('#sendMessage');
 const chatArea = document.querySelector('#chatArea');
@@ -55,10 +56,10 @@ const SIGNAL_TYPES = {
 
 connectBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    if (!name.value || !recipientName.value) {
+    if (!name.value || !sex.value || !preference.value) {
         return;
     }
-    connect(name.value, recipientName.value);
+    connect(name.value, sex.value, preference.value);
     hideElement('connect-section');
     displayElement('chat-section');
     message.focus();
@@ -69,7 +70,7 @@ connectBtn.addEventListener('click', (e) => {
  * @param {string} userFrom 
  * @param {string} userTo 
  */
-function connect(userFrom, userTo) {
+function connect(name, sex, preference) {
     const hostName = location.hostname === 'localhost' ? '127.0.0.1' : location.hostname;
     const protocol = hostName === '127.0.0.1' ? 'ws' : 'wss';
     const port = location.port;
@@ -77,7 +78,7 @@ function connect(userFrom, userTo) {
 
     socket = new WebSocket(wsUrl);
     socket.onopen = () => {
-        onConnect(userFrom, userTo);
+        onConnect(name, sex, preference);
 
         // If the rtcPeerConnection is not set, we set it
         if (!rtcPeerConn) {
@@ -91,8 +92,8 @@ function connect(userFrom, userTo) {
 
 }
 
-function onConnect(userFrom, userTo) {
-    socket.send(prepareMsg({type: TYPES.NEW_USER, content: {userFrom, userTo}}));
+function onConnect(name, sex, preference) {
+    socket.send(prepareMsg({type: TYPES.NEW_USER, content: {name, sex, preference}}));
 }
 
 function prepareMsg(msg) {
