@@ -8,16 +8,24 @@ let signalingId = 1;
 function connectUsers(Iam, Iwant, socket) {
     let room;
     if (!alreadyAsked(Iam, Iwant)) {
+        console.log('ALREADY ASKED 1')
         if (!alreadyAsked(Iwant, Iam)) {
+        console.log('ALREADY ASKED 2')
+
             startConnectionBetweenUsers(Iam, Iwant);
             room = `${Iam}${Iwant}`.replace(' ', '');
         } else {
+        console.log('ALREADY ASKED 3')
+
             finishConnectionBetweenUsers(Iwant, Iam);
             room = `${Iwant}${Iam}`.replace(' ', '');
         }
+
+        console.log('rooms[room]', rooms[room])
         if (!rooms[room]) {
             rooms[room] = [];
         }
+
         rooms[room].push(Iam);
         joinRoom(room, socket);
     }
