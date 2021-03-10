@@ -275,9 +275,8 @@ videoBtn.addEventListener('click', event => {
              });
          })
          .catch((e) => logError(e, `Could not start stream`));
-         videoBtn.classList.add('disabledButton');
-         videoBtn.disabled = true;
-         leaveBtn.classList.remove('disabledButton');
+        //  videoBtn.classList.add('disabledButton');
+        //  leaveBtn.classList.remove('disabledButton');
   });
 
 //   re.addEventListener('click', event => {
@@ -300,9 +299,8 @@ videoBtn.addEventListener('click', event => {
     senders.length = 0
     console.log(prepareMsg({type: TYPES.CLOSE_MESSAGE_FROM_CLIENT}));
     socket.send(prepareMsg({type: TYPES.CLOSE_MESSAGE_FROM_CLIENT}));
-    leaveBtn.classList.add('disabledButton');
-    leaveBtn.disabled = true;
-    videoBtn.classList.remove('disabledButton');
+    // leaveBtn.classList.add('disabledButton');
+    // videoBtn.classList.remove('disabledButton');
   });
 
 function closeMyChannel() {
