@@ -112,7 +112,7 @@ function handleMessage({type, content}) {
         case TYPES.SIGNAL_MESSAGE_TO_CLIENT: 
             onSignalingMessage(content);
             break;
-        case TYPES.CLOSE_MESSAGE_FROM_OTHER:
+        case TYPES.CLOSE_MESSAGE_TO_CLIENT:
             closeMyChannel();
         default:
             break;
