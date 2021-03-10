@@ -31,7 +31,7 @@ export function canDisplayTest(){
         display()
     }
     else {
-        console.log('il faut plus de messages')
+        displayMessage(chatArea,"Disquette Roulette: \n Il faut plus de messages pour débloquer la photo", "other")
     }
 }
 
