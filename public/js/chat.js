@@ -39,8 +39,8 @@ let isConnected = false;
 const TYPES = {
     NEW_USER: 'newUser',
     SIGNAL_MESSAGE_FROM_CLIENT: 'signal_message_from_client',
-    CLOSE_MESSAGE_FROM_USER: 'cassetoi',
-    CLOSE_MESSAGE_FROM_OTHER: 'jmetire',
+    CLOSE_MESSAGE_FROM_CLIENT: 'close_message_from_client',
+    CLOSE_MESSAGE_TO_CLIENT: 'close_message_to_client',
     DISCONNECTING: 'disconnecting',
     JOINED_ROOM: 'joined_room',
     SIGNAL_MESSAGE_TO_CLIENT: 'signal_message_to_client'
@@ -246,16 +246,16 @@ videoBtn.addEventListener('click', event => {
          videoBtn.classList.add('disabledButton');
   });
 
-  re.addEventListener('click', event => {
-    startStream()
-         .then(stream => {
-             stream.getTracks().forEach(track => {
-                  //send tracks to peer
-                  senders.push(rtcPeerConn.addTrack(track, stream));
-             });
-         })
-         .catch((e) => logError(e, `Could not start stream`));
-  });
+//   re.addEventListener('click', event => {
+//     startStream()
+//          .then(stream => {
+//              stream.getTracks().forEach(track => {
+//                   //send tracks to peer
+//                   senders.push(rtcPeerConn.addTrack(track, stream));
+//              });
+//          })
+//          .catch((e) => logError(e, `Could not start stream`));
+//   });
 
   leaveBtn.addEventListener('click', event => {
     stopStream(myVideoArea);
@@ -264,8 +264,8 @@ videoBtn.addEventListener('click', event => {
         rtcPeerConn.removeTrack(sender);
     })
     senders.length = 0
-    console.log(prepareMsg({type: TYPES.CLOSE_MESSAGE_FROM_USER}));
-    socket.send(prepareMsg({type: TYPES.CLOSE_MESSAGE_FROM_USER}));
+    console.log(prepareMsg({type: TYPES.CLOSE_MESSAGE_FROM_CLIENT}));
+    socket.send(prepareMsg({type: TYPES.CLOSE_MESSAGE_FROM_CLIENT}));
   });
 
 function closeMyChannel() {

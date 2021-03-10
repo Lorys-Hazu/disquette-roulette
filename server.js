@@ -31,6 +31,7 @@ wss.on('connection', function(socket) {
 
   // When a socket closes, or disconnects, remove it from the array.
   socket.on('close', function() {
+    console.log('socket closed');
     sockets = sockets.filter(s => s !== socket);
     handleMessage({type: TYPES.DISCONNECTING}, socket);
   });
@@ -39,8 +40,8 @@ wss.on('connection', function(socket) {
 const TYPES = {
   NEW_USER: 'newUser',
   SIGNAL_MESSAGE_FROM_CLIENT: 'signal_message_from_client',
-  CLOSE_MESSAGE_FROM_USER: 'cassetoi',
-  CLOSE_MESSAGE_FROM_OTHER: 'jmetire',
+  CLOSE_MESSAGE_FROM_CLIENT: 'close_message_from_client',
+  CLOSE_MESSAGE_FROM_CLIENT: 'close_message_to_client',
   DISCONNECTING: 'disconnecting',
   JOINED_ROOM: 'joined_room',
   SIGNAL_MESSAGE_TO_CLIENT: 'signal_message_to_client'
@@ -61,7 +62,7 @@ function handleMessage({type, content}, socket) {
     case TYPES.DISCONNECTING:
       onDisconnecting(socket);
       break;
-    case CLOSE_MESSAGE_FROM_USER:
+    case CLOSE_MESSAGE_FROM_CLIENT:
       closeChannel(socket);
       break;
     default:
