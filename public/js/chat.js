@@ -19,21 +19,6 @@ const name = document.getElementById('name');
 let sex = "";
 let preference = "";
 
-const sexRadio = document.getElementsByName('sex');
-for (var i = 0, length = sexRadio.length; i < length; i++) {
-    if (sexRadio[i].checked) {
-      sex = sexRadio[i].value;
-      break;
-    }
-  }
-const prefRadio = document.getElementsByName('preference');
-for (var i = 0, length = prefRadio.length; i < length; i++) {
-    if (prefRadio[i].checked) {
-      preference = prefRadio[i].value;
-      break;
-    }
-  }
-
 const message = document.querySelector('#message');
 const sendMessage = document.querySelector('#sendMessage');
 const chatArea = document.querySelector('#chatArea');
@@ -94,6 +79,7 @@ connectBtn.addEventListener('click', (e) => {
     connect(name.value, sex, preference);
     hideElement('connect-section');
     displayElement('chat-section');
+
     message.focus();
 });
 
@@ -184,7 +170,7 @@ function onSignalingMessageUserHere(message) {
 function initiateSignalingChannel(id) {
     signalingChannel = rtcPeerConn.createDataChannel(room, { negotiated: true, id });
 
-    signalingChannel.onmessage = function ({ data }) { displayMessage(chatArea, data) };
+    signalingChannel.onmessage = function ({ data, name }) { displayMessage(chatArea, data, "other") };
 
     // at opening, just send every queued message
     signalingChannel.onopen = onOpenSignalingChannel;
@@ -228,7 +214,7 @@ sendMessage.addEventListener('click', (e) => {
     } else {
         signalingMsgQueue.push(message.value);
     }
-    displayMessage(chatArea,message.value, name.value);
+    displayMessage(chatArea,message.value, "me");
     message.value = '';
 });
 

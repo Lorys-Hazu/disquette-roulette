@@ -11,8 +11,14 @@ export function displayElement(id) {
     document.getElementById(id)?.classList?.remove('display-none');
 }
 
-export function displayMessage(area, message, user) {
+export function displayMessage(area, message, who) {
     const div = document.createElement('div');
-    div.innerText = user + " : " + message;
+    div.innerText = message;
+    if (who === "me"){
+        div.classList.add('myMessage')
+    }
+    else {
+        div.classList.add('otherMessage')
+    }
     area.appendChild(div);
 }

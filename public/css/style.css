@@ -10,3 +10,9 @@
 .disabledButton:hover{
     cursor: not-allowed;
 }
+.myMessage{
+    float: right;
+}
+.otherMessage{
+    float:left;
+}
