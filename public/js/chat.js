@@ -76,6 +76,7 @@ connectBtn.addEventListener('click', (e) => {
     if (!name.value) {
         return;
     }
+    console.log('name:' + name + 'sex:' + sex + 'pref' + preference);
     connect(name.value, sex, preference);
     hideElement('connect-section');
     displayElement('chat-section');
