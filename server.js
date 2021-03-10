@@ -80,9 +80,6 @@ function onNewUser({sex, preference}, socket) {
     const signalingMsg = prepareMsg({type: TYPES.SIGNAL_MESSAGE_TO_CLIENT, content: {signalType: SIGNAL_TYPES.USER_HERE, message: signalingUiid}});
     broadcastToMe(signalingMsg, socket);
     
-		if (chatServer.areUsersConnected(userFrom, userTo)) {
-			console.log(`User ${userFrom} and user ${userTo} are now connected to room ${socket.room}`);
-    }
 }
 
 function onSignal({signalType, message}, socket) {
