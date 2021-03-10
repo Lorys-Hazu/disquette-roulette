@@ -2,5 +2,8 @@
     display: none
 }
 .disabledButton{
-    background-color: red;
+    background-color: grey;
+}
+.disabledButton:hover{
+    cursor: not-allowed;
 }
