@@ -71,7 +71,7 @@ function handleMessage({type, content}, socket) {
 }
 
 function onNewUser({userFrom, userTo}, socket) {
-
+  console.error('COUCOU');
     chatServer.connectUsers(userFrom, userTo, socket);
     const signalingUiid = chatServer.generateSignalingIdForRoom(socket.room);
     
