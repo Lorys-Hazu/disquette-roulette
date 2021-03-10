@@ -14,15 +14,32 @@ import {
 } from './functions.js';
 
 const connectBtn = document.querySelector('#connect');
+
 const name = document.getElementById('name');
-const sex = document.getElementById('sex');
-const preference = document.getElementById('preference');
+let sex = "";
+let preference = "";
+
+const sexRadio = document.getElementsByName('sex');
+for (var i = 0, length = sexRadio.length; i < length; i++) {
+    if (sexRadio[i].checked) {
+      sex = sexRadio[i].value;
+      break;
+    }
+  }
+const prefRadio = document.getElementsByName('preference');
+for (var i = 0, length = prefRadio.length; i < length; i++) {
+    if (prefRadio[i].checked) {
+      preference = prefRadio[i].value;
+      break;
+    }
+  }
+
 const message = document.querySelector('#message');
 const sendMessage = document.querySelector('#sendMessage');
 const chatArea = document.querySelector('#chatArea');
 const videoBtn = document.querySelector('#video-btn');
 const leaveBtn = document.querySelector('#leave-btn');
-const re = document.querySelector('#re-btn');
+
 let senders = []
 
 let room;
@@ -56,10 +73,10 @@ const SIGNAL_TYPES = {
 
 connectBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    if (!name.value || !sex.value || !preference.value) {
+    if (!name.value) {
         return;
     }
-    connect(name.value, sex.value, preference.value);
+    connect(name.value, sex, preference);
     hideElement('connect-section');
     displayElement('chat-section');
     message.focus();
