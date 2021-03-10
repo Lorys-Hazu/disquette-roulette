@@ -73,6 +73,20 @@ const SIGNAL_TYPES = {
 
 connectBtn.addEventListener('click', (e) => {
     e.preventDefault();
+    const sexRadio = document.getElementsByName('sex');
+    for (var i = 0, length = sexRadio.length; i < length; i++) {
+        if (sexRadio[i].checked) {
+            sex = sexRadio[i].value;
+            break;
+        }
+    }
+    const prefRadio = document.getElementsByName('preference');
+    for (var i = 0, length = prefRadio.length; i < length; i++) {
+        if (prefRadio[i].checked) {
+            preference = prefRadio[i].value;
+            break;
+        }
+    }
     if (!name.value) {
         return;
     }
