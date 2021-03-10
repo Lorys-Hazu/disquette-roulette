@@ -276,7 +276,7 @@ videoBtn.addEventListener('click', event => {
          })
          .catch((e) => logError(e, `Could not start stream`));
          videoBtn.classList.add('disabledButton');
-         videoBtn.disable = true;
+         videoBtn.disabled = true;
          leaveBtn.classList.remove('disabledButton');
   });
 
@@ -301,7 +301,7 @@ videoBtn.addEventListener('click', event => {
     console.log(prepareMsg({type: TYPES.CLOSE_MESSAGE_FROM_CLIENT}));
     socket.send(prepareMsg({type: TYPES.CLOSE_MESSAGE_FROM_CLIENT}));
     leaveBtn.classList.add('disabledButton');
-    leaveBtn.disable = true;
+    leaveBtn.disabled = true;
     videoBtn.classList.remove('disabledButton');
   });
 
