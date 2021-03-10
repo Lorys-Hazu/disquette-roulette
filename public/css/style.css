@@ -19,7 +19,7 @@ input{
     place-content: center;
 }
 
-button{
+/* button{
     display: flex;
     place-content: center;
     height: 20px;
@@ -28,7 +28,7 @@ button{
     border: 0px;
     background-color: #F9494B;
     color: white;
-}
+} */
 .display-none {
     display: none
 }

@@ -265,18 +265,15 @@ displayPhotoBtn.addEventListener('click', event => {
     canDisplayTest()
 })
 
-let truc = "truc"
-provisoire.addEventListener('click', event => {
-    prepareFileSending(truc);
-})
 
-function prepareFileSending(truc) {
-    console.log('preparing file')
-    console.log(truc);
-    socket.send(prepareMsg({type: TYPES.FILE_MESSAGE_FROM_CLIENT, content: truc}));
-}
+// function prepareFileSending(truc) {
+//     console.log('preparing file')
+//     console.log(truc);
+//     socket.send(prepareMsg({type: TYPES.FILE_MESSAGE_FROM_CLIENT, content: truc}));
+// }
 
 videoBtn.addEventListener('click', event => {
+    console.log("j'appuie");
     startStream()
          .then(stream => displayStream(stream, myVideoArea))
          .then(stream => {
