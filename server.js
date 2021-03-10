@@ -76,6 +76,7 @@ function onNewUser({userFrom, userTo}, socket) {
     const signalingUiid = chatServer.generateSignalingIdForRoom(socket.room);
     
     const roomMsg = prepareMsg({type: TYPES.JOINED_ROOM, content: {room: socket.room}});
+    console.log('room msg', roomMsg);
     broadcastToMe(roomMsg, socket);
     
     const signalingMsg = prepareMsg({type: TYPES.SIGNAL_MESSAGE_TO_CLIENT, content: {signalType: SIGNAL_TYPES.USER_HERE, message: signalingUiid}});

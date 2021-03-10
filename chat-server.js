@@ -5,20 +5,20 @@ const uuids = {};
 
 let signalingId = 1;
 
-function connectUsers(userFrom, userTo, socket) {
+function connectUsers(Iam, Iwant, socket) {
     let room;
-    if (!alreadyAsked(userFrom, userTo)) {
-        if (!alreadyAsked(userTo, userFrom)) {
-            startConnectionBetweenUsers(userFrom, userTo);
-            room = `${userFrom}${userTo}`.replace(' ', '');
+    if (!alreadyAsked(Iam, Iwant)) {
+        if (!alreadyAsked(Iwant, Iam)) {
+            startConnectionBetweenUsers(Iam, Iwant);
+            room = `${Iam}${Iwant}`.replace(' ', '');
         } else {
-            finishConnectionBetweenUsers(userTo, userFrom);
-            room = `${userTo}${userFrom}`.replace(' ', '');
+            finishConnectionBetweenUsers(Iwant, Iam);
+            room = `${Iwant}${Iam}`.replace(' ', '');
         }
         if (!rooms[room]) {
             rooms[room] = [];
         }
-        rooms[room].push(userFrom);
+        rooms[room].push(Iam);
         joinRoom(room, socket);
     }
 }
@@ -36,9 +36,9 @@ function joinRoom(room, socket) {
     socket.room = room;
 }
 
-function startConnectionBetweenUsers(user1, user2) {
-    pendingConnections[user1] = user2;
-    console.log(`starting connection between users ${user1} and ${user2}`);
+function startConnectionBetweenUsers(Iam, Iwant) {
+    pendingConnections[Iam] = Iwant;
+    console.log(`starting connection between users ${Iam} and ${Iwant}`);
 }
 
 function finishConnectionBetweenUsers(user2, user1) {
@@ -48,8 +48,8 @@ function finishConnectionBetweenUsers(user2, user1) {
     delete pendingConnections[user2];
 }
 
-function alreadyAsked(userTo, userFrom) {
-    return pendingConnections[userTo] === userFrom;
+function alreadyAsked(Iwant, Iam) {
+    return pendingConnections[Iwant] === Iam;
 }
 
 
