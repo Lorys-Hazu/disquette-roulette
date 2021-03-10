@@ -228,7 +228,7 @@ sendMessage.addEventListener('click', (e) => {
     } else {
         signalingMsgQueue.push(message.value);
     }
-    displayMessage(chatArea, message.value);
+    displayMessage(chatArea,message.value, name.value);
     message.value = '';
 });
 
