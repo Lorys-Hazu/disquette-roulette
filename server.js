@@ -25,7 +25,7 @@ wss.on('connection', function(socket) {
   sockets.push(socket);
 
   socket.on('message', function(msg) {
-    console.log('chaussette bien reçue chef')
+    console.log('chaussette bien reçue chef', msg)
     handleMessage(parseMsg(msg), this);
   });
 
@@ -71,7 +71,9 @@ function handleMessage({type, content}, socket) {
 }
 
 function onNewUser({userFrom, userTo}, socket) {
+  console.error('WESH LA FAMILLE');
     chatServer.connectUsers(userFrom, userTo, socket);
+    console.error('ENVIE DE CANER SA MERE');
     const signalingUiid = chatServer.generateSignalingIdForRoom(socket.room);
     
     const roomMsg = prepareMsg({type: TYPES.JOINED_ROOM, content: {room: socket.room}});
