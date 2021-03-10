@@ -1,6 +1,9 @@
 .display-none {
     display: none
 }
+.btn {
+    background-color: white;
+}
 .disabledButton{
     background-color: grey;
 }
